@@ -1,0 +1,984 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sydur Rahman | Full Stack Web Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              mono: ["Fira Code", "monospace"],
+            },
+            colors: {
+              slate: {
+                850: "#151e2e",
+                900: "#0f172a",
+              },
+              primary: "#22d3ee", // Cyan 400
+              primaryHover: "#06b6d4", // Cyan 500
+            },
+            animation: {
+              blob: "blob 7s infinite",
+              "fade-in-up": "fadeInUp 0.8s ease-out forwards",
+            },
+            keyframes: {
+              blob: {
+                "0%": { transform: "translate(0px, 0px) scale(1)" },
+                "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+                "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+                "100%": { transform: "translate(0px, 0px) scale(1)" },
+              },
+              fadeInUp: {
+                "0%": { opacity: "0", transform: "translateY(20px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap");
+
+      body {
+        background-color: #0f172a;
+        color: #cbd5e1;
+        overflow-x: hidden;
+      }
+
+      /* Subtle grid background */
+      .bg-grid {
+        background-size: 40px 40px;
+        background-image:
+          linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.05) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.05) 1px,
+            transparent 1px
+          );
+        mask-image: linear-gradient(to bottom, transparent, black, transparent);
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          black 40%,
+          transparent 100%
+        );
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f172a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+
+      /* Reveal Animation Classes */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease-out;
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Glassmorphism */
+      .glass-panel {
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* Chart Container Strict Bounds */
+      .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body
+    class="font-sans antialiased relative selection:bg-primary selection:text-slate-900"
+  >
+    <!-- Application Structure Plan: 
+         Chronological flow for potential clients/employers:
+         1. Hero -> 2. About -> 3. Services (What I offer) -> 4. Experience (Proof of work history) -> 
+         5. Skills (Tech breakdown + Chart.js) -> 6. Portfolio (Visual proof of capability) -> 7. Contact. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. Using pure Unicode and CSS for UI elements. -->
+
+    <!-- Background Decorative Elements -->
+    <div class="fixed inset-0 z-[-1] bg-grid opacity-30"></div>
+    <div
+      class="fixed top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-[128px] animate-blob z-[-1]"
+    ></div>
+    <div
+      class="fixed top-0 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full mix-blend-multiply filter blur-[128px] animate-blob animation-delay-2000 z-[-1]"
+    ></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+      <div
+        class="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center"
+      >
+        <a
+          href="#"
+          class="text-2xl font-bold text-white tracking-tighter flex items-center gap-1 group"
+        >
+          <span class="text-primary group-hover:text-white transition-colors"
+            >&lt;</span
+          >
+          SR<span class="text-primary font-mono text-xl">/</span>
+          <span class="text-primary group-hover:text-white transition-colors"
+            >&gt;</span
+          >
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden lg:flex items-center space-x-6 font-mono text-sm">
+          <a
+            href="#about"
+            class="text-slate-300 hover:text-primary transition-colors"
+            ><span class="text-primary">01.</span> About</a
+          >
+          <a
+            href="#services"
+            class="text-slate-300 hover:text-primary transition-colors"
+            ><span class="text-primary">02.</span> Services</a
+          >
+          <a
+            href="#experience"
+            class="text-slate-300 hover:text-primary transition-colors"
+            ><span class="text-primary">03.</span> Experience</a
+          >
+          <a
+            href="#skills"
+            class="text-slate-300 hover:text-primary transition-colors"
+            ><span class="text-primary">04.</span> Skills</a
+          >
+          <a
+            href="#portfolio"
+            class="text-slate-300 hover:text-primary transition-colors"
+            ><span class="text-primary">05.</span> Portfolio</a
+          >
+          <a
+            href="#contact"
+            class="px-4 py-2 border border-primary text-primary rounded hover:bg-primary/10 transition-colors ml-4"
+            >Hire Me</a
+          >
+        </div>
+
+        <!-- Mobile Menu Button (Unicode Hamburger) -->
+        <button
+          class="lg:hidden text-slate-300 hover:text-white text-3xl leading-none"
+          id="mobile-menu-btn"
+        >
+          &#9776;
+        </button>
+      </div>
+
+      <!-- Mobile Nav Dropdown -->
+      <div
+        id="mobile-menu"
+        class="hidden lg:hidden glass-panel absolute top-full left-0 w-full flex flex-col items-center py-6 space-y-5 font-mono text-sm shadow-xl border-b border-slate-700"
+      >
+        <a
+          href="#about"
+          class="text-slate-300 hover:text-primary transition-colors"
+          >01. About</a
+        >
+        <a
+          href="#services"
+          class="text-slate-300 hover:text-primary transition-colors"
+          >02. Services</a
+        >
+        <a
+          href="#experience"
+          class="text-slate-300 hover:text-primary transition-colors"
+          >03. Experience</a
+        >
+        <a
+          href="#skills"
+          class="text-slate-300 hover:text-primary transition-colors"
+          >04. Skills</a
+        >
+        <a
+          href="#portfolio"
+          class="text-slate-300 hover:text-primary transition-colors"
+          >05. Portfolio</a
+        >
+        <a
+          href="#contact"
+          class="text-slate-300 hover:text-primary transition-colors"
+          >06. Contact</a
+        >
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      class="min-h-screen flex items-center pt-20 pb-12 px-6 md:px-12 max-w-7xl mx-auto"
+    >
+      <div class="max-w-3xl animate-fade-in-up">
+        <p class="font-mono text-primary mb-4 ml-1">Hi, my name is</p>
+        <h1
+          class="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-4"
+        >
+          Sydur Rahman.
+        </h1>
+        <h2
+          class="text-4xl md:text-6xl font-bold text-slate-400 mb-6 leading-tight"
+        >
+          I build things for the web.
+        </h2>
+        <p
+          class="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl leading-relaxed"
+        >
+          I'm a
+          <span class="text-white font-medium">Full Stack Web Developer</span>
+          specializing in scalable architecture, reactive frontends, and
+          enterprise-grade WordPress plugins. With over 7 years of experience, I
+          turn complex problems into elegant, maintainable code.
+        </p>
+        <div class="flex flex-wrap gap-4 font-mono text-sm">
+          <a
+            href="#contact"
+            class="px-6 py-3 bg-primary text-slate-900 font-bold rounded hover:bg-primaryHover transition-colors"
+          >
+            Get In Touch
+          </a>
+          <a
+            href="#portfolio"
+            class="px-6 py-3 border border-slate-600 text-slate-300 rounded hover:border-slate-400 hover:text-white transition-colors"
+          >
+            View Portfolio
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01. About Section -->
+    <section id="about" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="flex items-center mb-12 reveal">
+        <h2 class="text-3xl font-bold text-white font-mono">
+          <span class="text-primary text-xl md:text-2xl mr-2">01.</span>About Me
+        </h2>
+        <div class="h-[1px] bg-slate-700 flex-grow ml-6"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6 text-slate-400 text-lg leading-relaxed reveal">
+          <p>
+            I see myself as a
+            <span class="text-primary">problem solver first</span>, and a
+            developer second. Coming from a non-IT background with an MBA in
+            Accounting, my journey into development was driven by pure curiosity
+            and an analytical mindset.
+          </p>
+          <p>
+            Over the past 7+ years, I've worked deeply with web technologies,
+            specializing in complex backend logic, API integrations, and modern
+            frontends (like Vue.js). I focus on practical solutions and
+            improving systems rather than just writing lines of code.
+          </p>
+          <p>
+            I thrive when debugging difficult issues or refactoring legacy
+            architectures to make them reliable and scalable for thousands of
+            active users across diverse server environments.
+          </p>
+          <div class="pt-4 flex gap-6 font-mono text-sm">
+            <a
+              href="https://github.com"
+              target="_blank"
+              class="text-slate-400 hover:text-primary transition-colors flex items-center gap-2"
+            >
+              <span class="text-2xl">&#128423;</span> GitHub
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              class="text-slate-400 hover:text-primary transition-colors flex items-center gap-2"
+            >
+              <span class="text-2xl">&#128100;</span> LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <!-- Terminal Graphic -->
+        <div class="reveal">
+          <div
+            class="glass-panel rounded-lg overflow-hidden shadow-2xl border-t border-slate-600"
+          >
+            <div
+              class="bg-slate-800/80 px-4 py-3 flex items-center gap-2 border-b border-slate-700"
+            >
+              <div class="w-3 h-3 rounded-full bg-red-500"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+              <span class="ml-2 font-mono text-xs text-slate-400"
+                >sydur_config.json</span
+              >
+            </div>
+            <div class="p-6 font-mono text-sm md:text-base overflow-x-auto">
+              <pre class="text-slate-300">
+<span class="text-pink-400">const</span> <span class="text-blue-400">developer</span> = {
+  <span class="text-primary">name:</span> <span class="text-green-400">'Sydur Rahman'</span>,
+  <span class="text-primary">role:</span> <span class="text-green-400">'Full Stack Web Developer'</span>,
+  <span class="text-primary">base:</span> <span class="text-green-400">'Dhaka, Bangladesh'</span>,
+  <span class="text-primary">uniqueTrait:</span> <span class="text-green-400">'MBA in Accounting'</span>,
+  <span class="text-primary">interests:</span> [
+    <span class="text-green-400">'Scalable Architecture'</span>,
+    <span class="text-green-400">'Reactive UI (Vue.js)'</span>,
+    <span class="text-green-400">'Legacy Code Rescue'</span>
+  ],
+  <span class="text-primary">isAvailableForHire:</span> <span class="text-blue-400">true</span>
+};
+</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02. Services Section -->
+    <section id="services" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="flex items-center mb-16 reveal">
+        <h2 class="text-3xl font-bold text-white font-mono">
+          <span class="text-primary text-xl md:text-2xl mr-2">02.</span>What I
+          Do
+        </h2>
+        <div class="h-[1px] bg-slate-700 flex-grow ml-6"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Service 1 -->
+        <div
+          class="glass-panel p-8 rounded-xl reveal hover:-translate-y-2 transition-transform duration-300 group border-t border-slate-700"
+        >
+          <div
+            class="text-4xl mb-6 text-slate-400 group-hover:text-primary transition-colors"
+          >
+            &#9881;
+          </div>
+          <h3
+            class="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors"
+          >
+            Advanced Plugin Engineering
+          </h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Developing scalable, secure, and highly optimized WordPress plugins
+            from scratch. I build tools intended for mass distribution or highly
+            specific enterprise use-cases.
+          </p>
+        </div>
+
+        <!-- Service 2 -->
+        <div
+          class="glass-panel p-8 rounded-xl reveal hover:-translate-y-2 transition-transform duration-300 group border-t border-slate-700 delay-100"
+        >
+          <div
+            class="text-4xl mb-6 text-slate-400 group-hover:text-primary transition-colors"
+          >
+            &#128187;
+          </div>
+          <h3
+            class="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors"
+          >
+            Reactive Frontend UI
+          </h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Bridging the gap between robust backends and smooth user
+            experiences. I integrate modern JavaScript frameworks like Vue.js
+            and Vanilla JS to create seamless, app-like interfaces.
+          </p>
+        </div>
+
+        <!-- Service 3 -->
+        <div
+          class="glass-panel p-8 rounded-xl reveal hover:-translate-y-2 transition-transform duration-300 group border-t border-slate-700 delay-200"
+        >
+          <div
+            class="text-4xl mb-6 text-slate-400 group-hover:text-primary transition-colors"
+          >
+            &#128736;
+          </div>
+          <h3
+            class="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors"
+          >
+            Legacy Code Refactoring
+          </h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Auditing, debugging, and modernizing old codebases. I resolve
+            complex conflicts, improve database query efficiency, and ensure
+            systems are maintainable for the future.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03. Experience Section -->
+    <section id="experience" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="flex items-center mb-16 reveal">
+        <h2 class="text-3xl font-bold text-white font-mono">
+          <span class="text-primary text-xl md:text-2xl mr-2">03.</span>Where
+          I've Worked
+        </h2>
+        <div class="h-[1px] bg-slate-700 flex-grow ml-6"></div>
+      </div>
+
+      <div class="relative border-l border-slate-700 ml-3 md:ml-6 space-y-12">
+        <!-- Experience Item 1 -->
+        <div class="relative pl-8 md:pl-12 reveal">
+          <div
+            class="absolute -left-2 top-1 w-4 h-4 rounded-full bg-slate-900 border-2 border-primary"
+          ></div>
+          <div
+            class="flex flex-col md:flex-row md:items-baseline justify-between mb-2"
+          >
+            <h3 class="text-xl font-bold text-white">
+              Full Stack / WordPress Developer
+              <span class="text-primary">@ Premio.com</span>
+            </h3>
+            <span class="font-mono text-sm text-slate-400 mt-1 md:mt-0"
+              >April 2025 - Feb 2026</span
+            >
+          </div>
+          <p class="text-sm text-slate-500 mb-4 font-mono">Remote</p>
+          <ul class="space-y-3 text-slate-400">
+            <li class="flex items-start">
+              <span class="text-primary mr-2 mt-1">&#10140;</span>
+              Managed and enhanced complex existing applications and internal
+              sites.
+            </li>
+            <li class="flex items-start">
+              <span class="text-primary mr-2 mt-1">&#10140;</span>
+              Developed new features and debugged critical website issues using
+              modern standards.
+            </li>
+            <li class="flex items-start">
+              <span class="text-primary mr-2 mt-1">&#10140;</span>
+              Utilized PHP for robust backend logic and Vue.js for creating
+              dynamic, reactive user interfaces.
+            </li>
+          </ul>
+        </div>
+
+        <!-- Experience Item 2 -->
+        <div class="relative pl-8 md:pl-12 reveal">
+          <div
+            class="absolute -left-2 top-1 w-4 h-4 rounded-full bg-slate-900 border-2 border-slate-500"
+          ></div>
+          <div
+            class="flex flex-col md:flex-row md:items-baseline justify-between mb-2"
+          >
+            <h3 class="text-xl font-bold text-white">
+              WordPress Plugin Engineer
+              <span class="text-primary">@ Themefic.com</span>
+            </h3>
+            <span class="font-mono text-sm text-slate-400 mt-1 md:mt-0"
+              >July 2022 - Present</span
+            >
+          </div>
+          <p class="text-sm text-slate-500 mb-4 font-mono">Full-time</p>
+          <ul class="space-y-3 text-slate-400">
+            <li class="flex items-start">
+              <span class="text-primary mr-2 mt-1">&#10140;</span>
+              Engineered new premium plugins and scaled existing features for a
+              large user base.
+            </li>
+            <li class="flex items-start">
+              <span class="text-primary mr-2 mt-1">&#10140;</span>
+              Created custom functionality for enterprise clients and provided
+              deep technical support.
+            </li>
+            <li class="flex items-start">
+              <span class="text-primary mr-2 mt-1">&#10140;</span>
+              Participated in team architecture planning to solve challenging
+              data structures.
+            </li>
+          </ul>
+        </div>
+
+        <!-- Experience Item 3 -->
+        <div class="relative pl-8 md:pl-12 reveal">
+          <div
+            class="absolute -left-2 top-1 w-4 h-4 rounded-full bg-slate-900 border-2 border-slate-500"
+          ></div>
+          <div
+            class="flex flex-col md:flex-row md:items-baseline justify-between mb-2"
+          >
+            <h3 class="text-xl font-bold text-white">
+              Junior Web Developer
+              <span class="text-primary">@ Smart Framework</span>
+            </h3>
+            <span class="font-mono text-sm text-slate-400 mt-1 md:mt-0"
+              >Nov 2020 - Jun 2022</span
+            >
+          </div>
+          <p class="text-sm text-slate-500 mb-4 font-mono">Full-time</p>
+          <ul class="space-y-3 text-slate-400">
+            <li class="flex items-start">
+              <span class="text-primary mr-2 mt-1">&#10140;</span>
+              Designed and developed end-to-end client web projects focusing on
+              robust functionality.
+            </li>
+            <li class="flex items-start">
+              <span class="text-primary mr-2 mt-1">&#10140;</span>
+              Handled ongoing site maintenance, database optimization, and
+              client communication.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04. Skills Section with Chart.js -->
+    <section id="skills" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="flex items-center mb-12 reveal">
+        <h2 class="text-3xl font-bold text-white font-mono">
+          <span class="text-primary text-xl md:text-2xl mr-2">04.</span
+          >Technical Arsenal
+        </h2>
+        <div class="h-[1px] bg-slate-700 flex-grow ml-6"></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <!-- Skill Lists -->
+        <div class="space-y-8 reveal">
+          <div>
+            <h3
+              class="text-xl font-bold text-white mb-4 border-b border-slate-700 pb-2"
+            >
+              Backend & Architecture
+            </h3>
+            <div class="flex flex-wrap gap-3 font-mono text-sm">
+              <span
+                class="px-4 py-2 glass-panel text-primary rounded border border-slate-700"
+                >PHP 8.x</span
+              >
+              <span
+                class="px-4 py-2 glass-panel text-primary rounded border border-slate-700"
+                >MySQL</span
+              >
+              <span
+                class="px-4 py-2 glass-panel text-primary rounded border border-slate-700"
+                >WP Plugin API</span
+              >
+              <span
+                class="px-4 py-2 glass-panel text-primary rounded border border-slate-700"
+                >RESTful APIs</span
+              >
+              <span
+                class="px-4 py-2 glass-panel text-primary rounded border border-slate-700"
+                >JSON/Data Structs</span
+              >
+            </div>
+          </div>
+
+          <div>
+            <h3
+              class="text-xl font-bold text-white mb-4 border-b border-slate-700 pb-2"
+            >
+              Frontend Reactivity
+            </h3>
+            <div class="flex flex-wrap gap-3 font-mono text-sm">
+              <span
+                class="px-4 py-2 glass-panel text-white rounded border border-slate-700"
+                >JavaScript (ES6+)</span
+              >
+              <span
+                class="px-4 py-2 glass-panel text-white rounded border border-slate-700"
+                >Vue.js</span
+              >
+              <span
+                class="px-4 py-2 glass-panel text-white rounded border border-slate-700"
+                >jQuery</span
+              >
+              <span
+                class="px-4 py-2 glass-panel text-white rounded border border-slate-700"
+                >Tailwind CSS</span
+              >
+              <span
+                class="px-4 py-2 glass-panel text-white rounded border border-slate-700"
+                >HTML5/CSS3</span
+              >
+            </div>
+          </div>
+
+          <div>
+            <h3
+              class="text-xl font-bold text-white mb-4 border-b border-slate-700 pb-2"
+            >
+              Tools & Practices
+            </h3>
+            <div class="flex flex-wrap gap-3 font-mono text-sm text-slate-400">
+              <span class="flex items-center gap-2"
+                ><span class="text-primary">&#10004;</span> Git/Version
+                Control</span
+              >
+              <span class="flex items-center gap-2"
+                ><span class="text-primary">&#10004;</span> Performance
+                Profiling</span
+              >
+              <span class="flex items-center gap-2"
+                ><span class="text-primary">&#10004;</span> Financial Data
+                Logic</span
+              >
+              <span class="flex items-center gap-2"
+                ><span class="text-primary">&#10004;</span> Technical
+                Support</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart.js Visualization -->
+        <div
+          class="glass-panel p-6 rounded-xl border border-slate-700 reveal text-center flex flex-col justify-center"
+        >
+          <h3 class="text-lg font-mono text-slate-300 mb-6">
+            Development Focus Distribution
+          </h3>
+          <div class="chart-container mx-auto">
+            <canvas id="stackChart"></canvas>
+          </div>
+          <p class="text-xs text-slate-500 mt-4 font-mono">
+            *Estimated distribution based on typical plugin lifecycles.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05. Portfolio Section -->
+    <section id="portfolio" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="flex items-center mb-16 reveal">
+        <h2 class="text-3xl font-bold text-white font-mono">
+          <span class="text-primary text-xl md:text-2xl mr-2">05.</span>Some
+          Things I've Built
+        </h2>
+        <div class="h-[1px] bg-slate-700 flex-grow ml-6"></div>
+      </div>
+
+      <div class="space-y-24">
+        <!-- Project 1 -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center reveal group"
+        >
+          <!-- Image Placeholder (CSS Gradient to replace actual image/SVG) -->
+          <div
+            class="md:col-span-7 relative h-64 md:h-80 rounded-lg overflow-hidden glass-panel border border-slate-700 flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 group-hover:border-primary/50 transition-colors"
+          >
+            <div
+              class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-500"
+            ></div>
+            <div class="text-center">
+              <div class="text-5xl mb-2 opacity-50">&#128722;</div>
+              <!-- Shopping Cart -->
+              <span class="font-mono text-slate-500 text-sm tracking-widest"
+                >ECOMMERCE_SYSTEM_VIEW</span
+              >
+            </div>
+          </div>
+
+          <div class="md:col-span-5 md:text-right relative z-10 md:-ml-12">
+            <p class="font-mono text-primary text-sm mb-2">Featured Project</p>
+            <h3
+              class="text-2xl font-bold text-white mb-4 hover:text-primary transition-colors cursor-pointer"
+            >
+              Premium Checkout Extension
+            </h3>
+            <div
+              class="glass-panel p-6 rounded-lg text-slate-400 text-sm leading-relaxed mb-4 shadow-xl border border-slate-700 md:text-right text-left"
+            >
+              A highly scalable WordPress plugin designed to optimize the
+              checkout flow. Built a reactive frontend dashboard using Vue.js
+              communicating with secure custom REST API endpoints to handle
+              complex pricing matrices without page reloads.
+            </div>
+            <ul
+              class="flex flex-wrap md:justify-end gap-4 font-mono text-xs text-slate-300 mb-6"
+            >
+              <li>Vue.js</li>
+              <li>PHP 8</li>
+              <li>WP REST API</li>
+              <li>MySQL</li>
+            </ul>
+            <div class="flex md:justify-end gap-4">
+              <a
+                href="#"
+                class="text-slate-400 hover:text-primary transition-colors text-xl"
+                title="GitHub Code Placeholder"
+                >&#128423;</a
+              >
+              <a
+                href="#"
+                class="text-slate-400 hover:text-primary transition-colors text-xl"
+                title="Live Demo Placeholder"
+                >&#128279;</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center reveal group"
+        >
+          <div class="md:col-span-5 relative z-10 md:-mr-12 order-2 md:order-1">
+            <p class="font-mono text-primary text-sm mb-2">Internal Tooling</p>
+            <h3
+              class="text-2xl font-bold text-white mb-4 hover:text-primary transition-colors cursor-pointer"
+            >
+              Support Ticket Automator
+            </h3>
+            <div
+              class="glass-panel p-6 rounded-lg text-slate-400 text-sm leading-relaxed mb-4 shadow-xl border border-slate-700 text-left"
+            >
+              Developed an internal management system to automate client support
+              ticket routing based on issue complexity and plugin type. Utilized
+              custom database tables to handle large datasets efficiently
+              outside standard WP posts structure.
+            </div>
+            <ul
+              class="flex flex-wrap gap-4 font-mono text-xs text-slate-300 mb-6"
+            >
+              <li>Vanilla JS</li>
+              <li>PHP</li>
+              <li>Custom SQL</li>
+              <li>Cron Jobs</li>
+            </ul>
+            <div class="flex gap-4">
+              <a
+                href="#"
+                class="text-slate-400 hover:text-primary transition-colors text-xl"
+                title="Live Demo Placeholder"
+                >&#128279;</a
+              >
+            </div>
+          </div>
+
+          <!-- Image Placeholder -->
+          <div
+            class="md:col-span-7 relative h-64 md:h-80 rounded-lg overflow-hidden glass-panel border border-slate-700 flex items-center justify-center bg-gradient-to-bl from-slate-800 to-slate-900 group-hover:border-primary/50 transition-colors order-1 md:order-2"
+          >
+            <div
+              class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-500"
+            ></div>
+            <div class="text-center">
+              <div class="text-5xl mb-2 opacity-50">&#128202;</div>
+              <!-- Chart/Data -->
+              <span class="font-mono text-slate-500 text-sm tracking-widest"
+                >DATA_DASHBOARD_UI</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06. Contact Section -->
+    <section
+      id="contact"
+      class="py-32 px-6 md:px-12 max-w-4xl mx-auto text-center reveal"
+    >
+      <p class="font-mono text-primary mb-4">06. What's Next?</p>
+      <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+        Get In Touch
+      </h2>
+      <p class="text-lg text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+        I am currently open to new opportunities to build scalable applications,
+        refactor complex systems, and join a great team. Whether you have a
+        question, a project proposal, or just want to connect, my inbox is open.
+      </p>
+
+      <div
+        class="flex flex-col sm:flex-row justify-center items-center gap-6 mb-16"
+      >
+        <a
+          href="mailto:sydurrahman.dev@gmail.com"
+          class="px-8 py-4 bg-primary text-slate-900 font-bold rounded flex items-center gap-3 hover:bg-primaryHover transition-all hover:-translate-y-1 shadow-lg shadow-primary/20"
+        >
+          <span class="text-xl">&#9993;</span> Say Hello
+        </a>
+        <a
+          href="tel:+8801580668547"
+          class="px-8 py-4 glass-panel text-slate-300 font-bold rounded flex items-center gap-3 hover:border-slate-400 hover:text-white transition-all hover:-translate-y-1"
+        >
+          <span class="text-xl">&#128222;</span> +880 1580 668547
+        </a>
+      </div>
+
+      <div class="flex justify-center gap-8 font-mono text-sm text-slate-400">
+        <div class="flex flex-col items-center gap-2">
+          <span class="text-primary font-bold">Location</span>
+          <span>Dhaka City, Bangladesh</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <span class="text-primary font-bold">Website</span>
+          <a
+            href="https://www.sydurrahman.com"
+            target="_blank"
+            class="hover:text-primary transition-colors"
+            >sydurrahman.com</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer
+      class="py-8 text-center text-slate-500 font-mono text-sm border-t border-slate-800"
+    >
+      <p>Designed & Built with Tailwind CSS & Vanilla JS.</p>
+      <p class="mt-2">
+        &copy;
+        <script>
+          document.write(new Date().getFullYear());
+        </script>
+        Sydur Rahman.
+      </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // --- 1. Navigation & Mobile Menu Logic ---
+        const navbar = document.getElementById("navbar");
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 50) {
+            navbar.classList.add("glass-panel", "shadow-md");
+            navbar.classList.remove("py-4");
+            navbar.classList.add("py-2");
+          } else {
+            navbar.classList.remove("glass-panel", "shadow-md");
+            navbar.classList.add("py-4");
+            navbar.classList.remove("py-2");
+          }
+        });
+
+        const mobileBtn = document.getElementById("mobile-menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        mobileBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+          // Toggle between Hamburger and 'X' purely with Unicode text
+          if (mobileMenu.classList.contains("hidden")) {
+            mobileBtn.innerHTML = "&#9776;"; // Hamburger
+          } else {
+            mobileBtn.innerHTML = "&#10005;"; // Cross (X)
+          }
+        });
+
+        const mobileLinks = mobileMenu.querySelectorAll("a");
+        mobileLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            mobileMenu.classList.add("hidden");
+            mobileBtn.innerHTML = "&#9776;";
+          });
+        });
+
+        // --- 2. Scroll Animation (Intersection Observer) ---
+        const revealElements = document.querySelectorAll(".reveal");
+        const revealOptions = {
+          threshold: 0.15,
+          rootMargin: "0px 0px -50px 0px",
+        };
+
+        const revealOnScroll = new IntersectionObserver(function (
+          entries,
+          observer,
+        ) {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, revealOptions);
+
+        revealElements.forEach((el) => {
+          revealOnScroll.observe(el);
+        });
+
+        // --- 3. Chart.js Initialization ---
+        const ctx = document.getElementById("stackChart").getContext("2d");
+
+        // Setup global defaults for dark theme
+        Chart.defaults.color = "#cbd5e1"; // slate-300
+        Chart.defaults.font.family = "'Fira Code', monospace";
+
+        new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: [
+              "Backend (PHP/WP)",
+              "Frontend (Vue/JS)",
+              "Database/Architecture",
+              "DevOps/Other",
+            ],
+            datasets: [
+              {
+                data: [45, 30, 15, 10],
+                backgroundColor: [
+                  "rgba(34, 211, 238, 0.8)", // Primary Cyan
+                  "rgba(59, 130, 246, 0.8)", // Blue
+                  "rgba(148, 163, 184, 0.8)", // Slate
+                  "rgba(30, 41, 59, 0.8)", // Dark Slate
+                ],
+                borderColor: "#0f172a", // Background color for borders
+                borderWidth: 2,
+                hoverOffset: 4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "70%", // Makes the doughnut thinner
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  padding: 20,
+                  usePointStyle: true,
+                  pointStyle: "circle",
+                },
+              },
+              tooltip: {
+                backgroundColor: "rgba(15, 23, 42, 0.95)",
+                titleFont: { size: 13, family: "'Inter', sans-serif" },
+                bodyFont: { size: 14, family: "'Inter', sans-serif" },
+                padding: 12,
+                borderColor: "rgba(34, 211, 238, 0.3)",
+                borderWidth: 1,
+                callbacks: {
+                  label: function (context) {
+                    return `  ${context.label}: ${context.parsed}%`;
+                  },
+                },
+              },
+            },
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

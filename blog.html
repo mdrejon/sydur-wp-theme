@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Sydur Rahman - Full Stack Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                        },
+                        primary: '#22d3ee', // Cyan 400
+                        primaryHover: '#06b6d4', // Cyan 500
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            background-color: #0f172a;
+            color: #cbd5e1;
+            overflow-x: hidden;
+        }
+
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, transparent, black, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased relative selection:bg-primary selection:text-slate-900">
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 z-[-1] bg-grid opacity-30"></div>
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-[128px] animate-blob z-[-1]"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 glass-panel shadow-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-white tracking-tighter flex items-center gap-1 group">
+                <span class="text-primary group-hover:text-white transition-colors">&lt;</span>
+                SR<span class="text-primary font-mono text-xl">/</span>
+                <span class="text-primary group-hover:text-white transition-colors">&gt;</span>
+            </a>
+            
+            <!-- Desktop Nav -->
+            <div class="hidden lg:flex items-center space-x-6 font-mono text-sm">
+                <a href="index.html#about" class="text-slate-300 hover:text-primary transition-colors">01. About</a>
+                <a href="index.html#portfolio" class="text-slate-300 hover:text-primary transition-colors">02. Portfolio</a>
+                <a href="blog.html" class="text-primary border-b border-primary pb-1">03. Blog</a>
+                <a href="index.html#contact" class="px-4 py-2 border border-primary text-primary rounded hover:bg-primary/10 transition-colors ml-4">Hire Me</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="lg:hidden text-slate-300 hover:text-white text-3xl leading-none" id="mobile-menu-btn">&#9776;</button>
+        </div>
+        
+        <!-- Mobile Nav Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden glass-panel absolute top-full left-0 w-full flex flex-col items-center py-6 space-y-5 font-mono text-sm shadow-xl border-b border-slate-700">
+             <a href="index.html#about" class="text-slate-300 hover:text-primary transition-colors">01. About</a>
+             <a href="index.html#portfolio" class="text-slate-300 hover:text-primary transition-colors">02. Portfolio</a>
+             <a href="blog.html" class="text-primary">03. Blog</a>
+             <a href="index.html#contact" class="text-slate-300 hover:text-primary transition-colors">04. Contact</a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="pt-32 pb-16 px-6 md:px-12 max-w-7xl mx-auto animate-fade-in-up">
+        <p class="font-mono text-primary mb-4 ml-1">Insights & Tutorials</p>
+        <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight mb-6">Writing & Thinking.</h1>
+        <p class="text-lg text-slate-400 max-w-2xl leading-relaxed mb-10">
+            Deep dives into WordPress plugin architecture, Vue.js reactivity, backend scaling, and my journey as a full-stack developer.
+        </p>
+        
+        <!-- Search & Filter -->
+        <div class="flex flex-col md:flex-row gap-4 max-w-3xl">
+            <div class="relative flex-grow">
+                <span class="absolute left-4 top-3 text-slate-500 text-lg">&#128269;</span>
+                <input type="text" placeholder="Search articles..." class="w-full bg-slate-800/50 border border-slate-700 text-white rounded-lg py-3 pl-12 pr-4 focus:outline-none focus:border-primary transition-colors font-mono text-sm">
+            </div>
+            <div class="flex gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide font-mono text-sm">
+                <button class="whitespace-nowrap px-4 py-3 bg-primary text-slate-900 font-bold rounded-lg hover:bg-primaryHover transition-colors">All Posts</button>
+                <button class="whitespace-nowrap px-4 py-3 glass-panel text-slate-300 rounded-lg hover:border-slate-400 hover:text-white transition-colors">#WordPress</button>
+                <button class="whitespace-nowrap px-4 py-3 glass-panel text-slate-300 rounded-lg hover:border-slate-400 hover:text-white transition-colors">#VueJS</button>
+                <button class="whitespace-nowrap px-4 py-3 glass-panel text-slate-300 rounded-lg hover:border-slate-400 hover:text-white transition-colors">#Backend</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blog Grid -->
+    <main class="py-12 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Article 1 -->
+            <article class="glass-panel p-6 rounded-xl border border-slate-700 hover:border-primary/50 transition-all hover:-translate-y-2 group cursor-pointer reveal" onclick="window.location.href='blog-details.html'">
+                <div class="flex justify-between items-center mb-4 font-mono text-xs">
+                    <span class="text-primary bg-primary/10 px-2 py-1 rounded">#VueJS</span>
+                    <span class="text-slate-500 flex items-center gap-1"><span class="text-sm">&#128197;</span> May 12, 2026</span>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2">Integrating Vue 3 Reactivity inside Legacy WordPress Admin Pages</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6 line-clamp-3">
+                    A comprehensive guide on modernizing old plugin interfaces without rewriting the entire PHP backend. Learn how to mount Vue apps securely within the WP dashboard.
+                </p>
+                <div class="flex items-center justify-between font-mono text-xs">
+                    <span class="text-slate-500 flex items-center gap-1"><span class="text-sm">&#9202;</span> 8 min read</span>
+                    <span class="text-primary group-hover:text-white transition-colors flex items-center gap-2">Read <span class="text-lg">&#10142;</span></span>
+                </div>
+            </article>
+
+            <!-- Article 2 -->
+            <article class="glass-panel p-6 rounded-xl border border-slate-700 hover:border-primary/50 transition-all hover:-translate-y-2 group cursor-pointer reveal delay-100" onclick="window.location.href='blog-details.html'">
+                <div class="flex justify-between items-center mb-4 font-mono text-xs">
+                    <span class="text-primary bg-primary/10 px-2 py-1 rounded">#Backend</span>
+                    <span class="text-slate-500 flex items-center gap-1"><span class="text-sm">&#128197;</span> Apr 28, 2026</span>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2">Optimizing Massive MySQL Queries for Enterprise Plugins</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6 line-clamp-3">
+                    When the standard WP_Query isn't enough. Strategies for writing custom, highly performant SQL queries when dealing with millions of records in custom tables.
+                </p>
+                <div class="flex items-center justify-between font-mono text-xs">
+                    <span class="text-slate-500 flex items-center gap-1"><span class="text-sm">&#9202;</span> 12 min read</span>
+                    <span class="text-primary group-hover:text-white transition-colors flex items-center gap-2">Read <span class="text-lg">&#10142;</span></span>
+                </div>
+            </article>
+
+            <!-- Article 3 -->
+            <article class="glass-panel p-6 rounded-xl border border-slate-700 hover:border-primary/50 transition-all hover:-translate-y-2 group cursor-pointer reveal delay-200" onclick="window.location.href='blog-details.html'">
+                <div class="flex justify-between items-center mb-4 font-mono text-xs">
+                    <span class="text-primary bg-primary/10 px-2 py-1 rounded">#Career</span>
+                    <span class="text-slate-500 flex items-center gap-1"><span class="text-sm">&#128197;</span> Apr 05, 2026</span>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2">From Accounting MBA to Full Stack Developer: The Analytical Edge</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6 line-clamp-3">
+                    How understanding financial logic, data structuring, and business operations makes you a better backend engineer and problem solver.
+                </p>
+                <div class="flex items-center justify-between font-mono text-xs">
+                    <span class="text-slate-500 flex items-center gap-1"><span class="text-sm">&#9202;</span> 5 min read</span>
+                    <span class="text-primary group-hover:text-white transition-colors flex items-center gap-2">Read <span class="text-lg">&#10142;</span></span>
+                </div>
+            </article>
+
+            <!-- Article 4 -->
+            <article class="glass-panel p-6 rounded-xl border border-slate-700 hover:border-primary/50 transition-all hover:-translate-y-2 group cursor-pointer reveal" onclick="window.location.href='blog-details.html'">
+                <div class="flex justify-between items-center mb-4 font-mono text-xs">
+                    <span class="text-primary bg-primary/10 px-2 py-1 rounded">#WordPress</span>
+                    <span class="text-slate-500 flex items-center gap-1"><span class="text-sm">&#128197;</span> Mar 19, 2026</span>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2">Building Secure Custom REST API Endpoints in WP</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6 line-clamp-3">
+                    Best practices for routing, nonces, permission callbacks, and data sanitization when exposing data to decoupled frontends.
+                </p>
+                <div class="flex items-center justify-between font-mono text-xs">
+                    <span class="text-slate-500 flex items-center gap-1"><span class="text-sm">&#9202;</span> 10 min read</span>
+                    <span class="text-primary group-hover:text-white transition-colors flex items-center gap-2">Read <span class="text-lg">&#10142;</span></span>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-16 flex justify-center items-center gap-4 font-mono text-sm reveal">
+            <button class="px-4 py-2 border border-slate-700 text-slate-500 rounded cursor-not-allowed">&lt; Prev</button>
+            <button class="w-10 h-10 bg-primary text-slate-900 font-bold rounded flex items-center justify-center">1</button>
+            <button class="w-10 h-10 border border-slate-700 text-slate-300 hover:border-primary hover:text-primary transition-colors rounded flex items-center justify-center">2</button>
+            <button class="px-4 py-2 border border-slate-700 text-slate-300 hover:border-primary hover:text-primary transition-colors rounded">Next &gt;</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-slate-500 font-mono text-sm border-t border-slate-800 mt-20">
+        <p>&copy; <script>document.write(new Date().getFullYear())</script> Sydur Rahman. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                if(mobileMenu.classList.contains('hidden')) {
+                    mobileBtn.innerHTML = '&#9776;';
+                } else {
+                    mobileBtn.innerHTML = '&#10005;';
+                }
+            });
+
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => revealOnScroll.observe(el));
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Details | Sydur Rahman</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: { 850: '#151e2e', 900: '#0f172a' },
+                        primary: '#22d3ee',
+                        primaryHover: '#06b6d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body { background-color: #0f172a; color: #cbd5e1; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Markdown/Prose Typography Styling */
+        .prose h2 { color: white; font-size: 1.875rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1.25rem; }
+        .prose h3 { color: #e2e8f0; font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; }
+        .prose p { margin-bottom: 1.5rem; line-height: 1.8; color: #94a3b8; }
+        .prose a { color: #22d3ee; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+        .prose a:hover { border-color: #22d3ee; }
+        .prose strong { color: #e2e8f0; font-weight: 600; }
+        .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; color: #94a3b8; }
+        .prose li { margin-bottom: 0.5rem; }
+        .prose code:not(pre code) { background: #1e293b; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: 'Fira Code', monospace; font-size: 0.875em; color: #38bdf8; }
+    </style>
+</head>
+<body class="font-sans antialiased relative selection:bg-primary selection:text-slate-900">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 glass-panel shadow-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-white tracking-tighter flex items-center gap-1 group">
+                <span class="text-primary group-hover:text-white transition-colors">&lt;</span>
+                SR<span class="text-primary font-mono text-xl">/</span>
+                <span class="text-primary group-hover:text-white transition-colors">&gt;</span>
+            </a>
+            
+            <div class="hidden lg:flex items-center space-x-6 font-mono text-sm">
+                <a href="index.html#about" class="text-slate-300 hover:text-primary transition-colors">01. About</a>
+                <a href="blog.html" class="text-primary border-b border-primary pb-1">02. Blog</a>
+                <a href="index.html#contact" class="px-4 py-2 border border-primary text-primary rounded hover:bg-primary/10 transition-colors ml-4">Hire Me</a>
+            </div>
+
+            <button class="lg:hidden text-slate-300 hover:text-white text-3xl leading-none" id="mobile-menu-btn">&#9776;</button>
+        </div>
+        
+        <div id="mobile-menu" class="hidden lg:hidden glass-panel absolute top-full left-0 w-full flex flex-col items-center py-6 space-y-5 font-mono text-sm shadow-xl border-b border-slate-700">
+             <a href="index.html" class="text-slate-300 hover:text-primary transition-colors">Home</a>
+             <a href="blog.html" class="text-primary">Blog</a>
+        </div>
+    </nav>
+
+    <!-- Article Header -->
+    <header class="pt-32 pb-10 px-6 md:px-12 max-w-4xl mx-auto mt-8">
+        <a href="blog.html" class="font-mono text-primary text-sm mb-8 inline-flex items-center hover:text-white transition-colors">
+            <span class="mr-2 text-lg">&#8592;</span> Back to all posts
+        </a>
+        
+        <div class="flex items-center gap-4 font-mono text-xs text-slate-400 mb-6 border-b border-slate-800 pb-6">
+            <span class="text-primary bg-primary/10 px-3 py-1.5 rounded uppercase tracking-wider">Vue.js</span>
+            <span class="flex items-center gap-2"><span class="text-base">&#128197;</span> May 12, 2026</span>
+            <span class="flex items-center gap-2"><span class="text-base">&#9202;</span> 8 min read</span>
+        </div>
+        
+        <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight mb-6">
+            Integrating Vue 3 Reactivity inside Legacy WordPress Admin Pages
+        </h1>
+        
+        <!-- Author Profile -->
+        <div class="flex items-center gap-4 mt-8">
+            <div class="w-12 h-12 rounded-full bg-slate-800 border-2 border-slate-700 flex items-center justify-center text-xl overflow-hidden">
+                &#128104;&#8205;&#128187;
+            </div>
+            <div>
+                <p class="text-white font-medium text-sm">Sydur Rahman</p>
+                <p class="font-mono text-xs text-slate-500">Full Stack Web Developer</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-4 px-6 md:px-12 max-w-4xl mx-auto prose">
+        <p class="text-xl">
+            Modernizing old plugin interfaces can feel like an impossible task without rewriting the entire PHP backend. However, integrating a modern JavaScript framework like Vue 3 directly into the WordPress admin dashboard is not only possible, but it's often the most pragmatic approach to scaling legacy software.
+        </p>
+
+        <h2>The Problem with jQuery and Legacy Admin UIs</h2>
+        <p>
+            For years, the standard approach to WordPress plugin interfaces was server-side rendered HTML heavily sprinkled with jQuery to handle interactions. As plugins grow in complexity (think complex settings panels, data tables, or drag-and-drop builders), managing state via the DOM becomes an absolute nightmare. 
+        </p>
+        <p>
+            Bugs multiply, UI state falls out of sync with the database, and the user experience feels clunky. We need <strong>reactivity</strong>.
+        </p>
+
+        <h2>Mounting Vue in the Dashboard</h2>
+        <p>
+            The easiest way to start is by injecting a target `div` via your PHP backend, and then enqueuing your built Vue script. Unlike a headless SPA, we aren't taking over the whole screen—we are creating a robust "island" of interactivity.
+        </p>
+
+        <!-- Code Block -->
+        <div class="my-8 rounded-lg overflow-hidden border border-slate-700 shadow-xl">
+            <div class="bg-slate-800 px-4 py-2 flex items-center gap-2 border-b border-slate-700 font-mono text-xs text-slate-400">
+                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                <span class="ml-2">admin-menu.php</span>
+            </div>
+            <div class="bg-[#0d1117] p-5 overflow-x-auto font-mono text-sm leading-relaxed">
+<pre>
+<span class="text-pink-400">public function</span> <span class="text-blue-400">render_admin_page</span>() {
+    <span class="text-slate-500">// Output the mount point</span>
+    <span class="text-primary">echo</span> <span class="text-green-400">'&lt;div class="wrap"&gt;'</span>;
+    <span class="text-primary">echo</span> <span class="text-green-400">'&lt;div id="sr-vue-app-root"&gt;&lt;/div&gt;'</span>;
+    <span class="text-primary">echo</span> <span class="text-green-400">'&lt;/div&gt;'</span>;
+    
+    <span class="text-slate-500">// Pass localized data to Vue via window object</span>
+    <span class="text-blue-400">wp_localize_script</span>(<span class="text-green-400">'sr-vue-script'</span>, <span class="text-green-400">'srAppData'</span>, [
+        <span class="text-green-400">'nonce'</span>    => <span class="text-blue-400">wp_create_nonce</span>(<span class="text-green-400">'wp_rest'</span>),
+        <span class="text-green-400">'apiUrl'</span>   => <span class="text-blue-400">esc_url_raw</span>(<span class="text-blue-400">rest_url</span>(<span class="text-green-400">'sr/v1/'</span>)),
+        <span class="text-green-400">'settings'</span> => <span class="text-blue-400">get_option</span>(<span class="text-green-400">'sr_plugin_settings'</span>, [])
+    ]);
+}
+</pre>
+            </div>
+        </div>
+
+        <h2>Communicating with the Server</h2>
+        <p>
+            Notice the `wp_localize_script` function above. This is crucial. Since our Vue app is running inside a traditional WordPress session, we don't want to mess with JWT or OAuth just to save settings. We pass the native WP REST API nonce to our script, allowing our Vue app to make authenticated requests back to our custom endpoints effortlessly.
+        </p>
+
+        <ul>
+            <li><strong>State Management:</strong> Use Pinia or Vue's native Composition API `ref()` for local state.</li>
+            <li><strong>API Calls:</strong> Use Axios or the native `fetch` API, ensuring you append the `X-WP-Nonce` header.</li>
+            <li><strong>Styling:</strong> Scoped CSS or Tailwind prefixing prevents your plugin styles from conflicting with the WordPress core admin styles.</li>
+        </ul>
+
+        <h3>Conclusion</h3>
+        <p>
+            By isolating complex UIs into Vue components, you immediately improve developer experience and code maintainability. The plugin feels significantly faster to the end-user, and you escape the tangled web of DOM manipulation.
+        </p>
+    </main>
+
+    <!-- Article Footer / Share -->
+    <div class="max-w-4xl mx-auto px-6 md:px-12 mt-12 mb-20 border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="font-mono text-sm text-slate-400">
+            Share this article:
+        </div>
+        <div class="flex gap-4">
+            <button class="px-4 py-2 border border-slate-700 hover:border-primary text-slate-300 hover:text-primary rounded transition-colors font-mono text-xs flex items-center gap-2">
+                <span class="text-lg">&#128038;</span> Twitter
+            </button>
+            <button class="px-4 py-2 border border-slate-700 hover:border-primary text-slate-300 hover:text-primary rounded transition-colors font-mono text-xs flex items-center gap-2">
+                <span class="text-lg">&#128100;</span> LinkedIn
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-slate-500 font-mono text-sm border-t border-slate-800">
+        <p>&copy; <script>document.write(new Date().getFullYear())</script> Sydur Rahman. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                mobileBtn.innerHTML = mobileMenu.classList.contains('hidden') ? '&#9776;' : '&#10005;';
+            });
+        });
+    </script>
+</body>
+</html>

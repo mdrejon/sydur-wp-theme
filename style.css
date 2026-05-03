@@ -1,0 +1,119 @@
+/*
+Theme Name: Sydur WP Theme
+Theme URI: https://sydur.com
+Author: Sydur Rahman
+Author URI: https://sydur.com
+Description: A custom, highly-optimized WordPress theme built with Tailwind CSS.
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: sydur-wp-theme
+*/
+
+/* Core CSS extracted from HTML templates */
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+    background-color: #0f172a;
+    color: #cbd5e1;
+    overflow-x: hidden;
+}
+
+/* Subtle grid background */
+.bg-grid {
+    background-size: 40px 40px;
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    mask-image: linear-gradient(to bottom, transparent, black, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* Reveal Animation Classes */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Glassmorphism */
+.glass-panel {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Chart Container Strict Bounds */
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+/* Markdown/Prose Typography Styling for Blog Details */
+.prose h2 { color: white; font-size: 1.875rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1.25rem; }
+.prose h3 { color: #e2e8f0; font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; }
+.prose p { margin-bottom: 1.5rem; line-height: 1.8; color: #94a3b8; }
+.prose a { color: #22d3ee; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+.prose a:hover { border-color: #22d3ee; }
+.prose strong { color: #e2e8f0; font-weight: 600; }
+.prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; color: #94a3b8; }
+.prose li { margin-bottom: 0.5rem; }
+.prose code:not(pre code) { background: #1e293b; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: 'Fira Code', monospace; font-size: 0.875em; color: #38bdf8; }
+
+/* WP Nav Menu Styling */
+.primary-menu-container ul.desktop-menu {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* space-x-6 is 24px = 1.5rem */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.primary-menu-container ul.desktop-menu li a {
+    color: #cbd5e1; /* text-slate-300 */
+    transition: color 0.3s;
+    text-decoration: none;
+}
+.primary-menu-container ul.desktop-menu li a:hover {
+    color: #22d3ee; /* text-primary */
+}
+.primary-menu-container ul.desktop-menu li.current-menu-item > a {
+    color: #22d3ee;
+    border-bottom: 1px solid #22d3ee;
+    padding-bottom: 0.25rem;
+}
+
+#mobile-menu ul.mobile-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem; /* space-y-5 */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+#mobile-menu ul.mobile-menu li a {
+    color: #cbd5e1;
+    transition: color 0.3s;
+    text-decoration: none;
+}
+#mobile-menu ul.mobile-menu li a:hover {
+    color: #22d3ee;
+}
+#mobile-menu ul.mobile-menu li.current-menu-item > a {
+    color: #22d3ee;
+}
