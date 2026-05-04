@@ -32,6 +32,7 @@
                         'container'      => false,
                         'menu_class'     => 'desktop-menu',
                         'fallback_cb'    => false,
+                        'walker'         => new Sydur_Numbered_Walker_Nav_Menu(),
                     ) );
                 } else {
                     echo '<p class="text-slate-500">Please assign a menu in Appearance -> Menus</p>';

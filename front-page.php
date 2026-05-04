@@ -11,6 +11,14 @@ $hero_title = isset( $options['hero_title'] ) && ! empty( $options['hero_title']
 $hero_subtitle = isset( $options['hero_subtitle'] ) && ! empty( $options['hero_subtitle'] ) ? $options['hero_subtitle'] : 'I build things for the web.';
 $hero_desc = isset( $options['hero_description'] ) && ! empty( $options['hero_description'] ) ? $options['hero_description'] : "I'm a Full Stack Web Developer specializing in scalable architecture, reactive frontends, and enterprise-grade WordPress plugins.";
 
+// Retrieve dynamic headings from options
+$about_heading = isset($options['about_heading']) && !empty($options['about_heading']) ? $options['about_heading'] : 'About Me';
+$services_heading = isset($options['services_heading']) && !empty($options['services_heading']) ? $options['services_heading'] : "What I Do";
+$experience_heading = isset($options['experience_heading']) && !empty($options['experience_heading']) ? $options['experience_heading'] : "Where I've Worked";
+$skills_heading = isset($options['skills_heading']) && !empty($options['skills_heading']) ? $options['skills_heading'] : "Technical Arsenal";
+$portfolio_heading = isset($options['portfolio_heading']) && !empty($options['portfolio_heading']) ? $options['portfolio_heading'] : "Some Things I've Built";
+$contact_heading = isset($options['contact_heading']) && !empty($options['contact_heading']) ? $options['contact_heading'] : "What's Next?";
+ 
 $about_text = isset( $options['about_text'] ) && ! empty( $options['about_text'] ) ? $options['about_text'] : "<p>I see myself as a <span class='text-primary'>problem solver first</span>, and a developer second.</p>";
 $github_url = isset( $options['github_url'] ) ? $options['github_url'] : '#';
 $linkedin_url = isset( $options['linkedin_url'] ) ? $options['linkedin_url'] : '#';
@@ -42,11 +50,13 @@ $contact_email = isset( $options['contact_email'] ) ? $options['contact_email'] 
         </div>
     </section>
 
+ 
+
     <!-- 01. About Section -->
     <section id="about" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
         <div class="flex items-center mb-12 reveal">
             <h2 class="text-3xl font-bold text-white font-mono">
-                <span class="text-primary text-xl md:text-2xl mr-2">01.</span>About Me
+                <span class="text-primary text-xl md:text-2xl mr-2">01.</span><?php echo esc_html( $about_heading ); ?>
             </h2>
             <div class="h-[1px] bg-slate-700 flex-grow ml-6"></div>
         </div>
@@ -95,7 +105,7 @@ $contact_email = isset( $options['contact_email'] ) ? $options['contact_email'] 
     <section id="services" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
         <div class="flex items-center mb-16 reveal">
             <h2 class="text-3xl font-bold text-white font-mono">
-                <span class="text-primary text-xl md:text-2xl mr-2">02.</span>What I Do
+                <span class="text-primary text-xl md:text-2xl mr-2">02.</span><?php echo esc_html( $services_heading ); ?>
             </h2>
             <div class="h-[1px] bg-slate-700 flex-grow ml-6"></div>
         </div>
@@ -131,7 +141,7 @@ $contact_email = isset( $options['contact_email'] ) ? $options['contact_email'] 
     <section id="experience" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
         <div class="flex items-center mb-16 reveal">
             <h2 class="text-3xl font-bold text-white font-mono">
-                <span class="text-primary text-xl md:text-2xl mr-2">03.</span>Where I've Worked
+                <span class="text-primary text-xl md:text-2xl mr-2">03.</span><?php echo esc_html( $experience_heading ); ?>
             </h2>
             <div class="h-[1px] bg-slate-700 flex-grow ml-6"></div>
         </div>
@@ -171,7 +181,7 @@ $contact_email = isset( $options['contact_email'] ) ? $options['contact_email'] 
     <section id="skills" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
         <div class="flex items-center mb-12 reveal">
             <h2 class="text-3xl font-bold text-white font-mono">
-                <span class="text-primary text-xl md:text-2xl mr-2">04.</span>Technical Arsenal
+                <span class="text-primary text-xl md:text-2xl mr-2">04.</span><?php echo esc_html( $skills_heading ); ?>
             </h2>
             <div class="h-[1px] bg-slate-700 flex-grow ml-6"></div>
         </div>
@@ -211,7 +221,7 @@ $contact_email = isset( $options['contact_email'] ) ? $options['contact_email'] 
     <section id="portfolio" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
         <div class="flex items-center mb-16 reveal">
             <h2 class="text-3xl font-bold text-white font-mono">
-                <span class="text-primary text-xl md:text-2xl mr-2">05.</span>Some Things I've Built
+                <span class="text-primary text-xl md:text-2xl mr-2">05.</span><?php echo esc_html( $portfolio_heading ); ?>
             </h2>
             <div class="h-[1px] bg-slate-700 flex-grow ml-6"></div>
         </div>
@@ -287,7 +297,7 @@ $contact_email = isset( $options['contact_email'] ) ? $options['contact_email'] 
 
     <!-- 06. Contact Section -->
     <section id="contact" class="py-32 px-6 md:px-12 max-w-4xl mx-auto text-center reveal">
-        <p class="font-mono text-primary mb-4">06. What's Next?</p>
+        <p class="font-mono text-primary mb-4">06. <?php echo esc_html( $contact_heading ); ?></p>
         <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Get In Touch</h2>
         <p class="text-lg text-slate-400 mb-10 leading-relaxed max-w-2xl mx-auto">
             I'm currently open for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
@@ -298,3 +308,4 @@ $contact_email = isset( $options['contact_email'] ) ? $options['contact_email'] 
     </section>
 
 <?php get_footer(); ?>
+

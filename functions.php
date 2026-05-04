@@ -4,7 +4,7 @@
  */
 
 if ( ! defined( 'SYDUR_THEME_VERSION' ) ) {
-    define( 'SYDUR_THEME_VERSION', '1.0.0' );
+    define( 'SYDUR_THEME_VERSION', '1.0.1' );
 }
 
 /**
@@ -15,7 +15,9 @@ function sydur_theme_setup() {
     add_theme_support( 'post-thumbnails' );
     
     register_nav_menus( array(
-        'primary' => esc_html__( 'Primary Menu', 'sydur-wp-theme' ),
+        'primary'   => esc_html__( 'Primary Menu', 'sydur-wp-theme' ),
+        'secondary' => esc_html__( 'Secondary Menu', 'sydur-wp-theme' ),
+        'footer'    => esc_html__( 'Footer Menu', 'sydur-wp-theme' ),
     ) );
 }
 add_action( 'after_setup_theme', 'sydur_theme_setup' );
@@ -98,6 +100,19 @@ function sydur_theme_settings_init() {
 
     add_settings_section( 'sydur_contact_section', 'Contact Settings', null, 'sydur-theme-options' );
     add_settings_field( 'contact_email', 'Contact Email', 'sydur_text_field_cb', 'sydur-theme-options', 'sydur_contact_section', array( 'label_for' => 'contact_email' ) );
+    // Section Headings
+    add_settings_section( 'sydur_headings_section', 'Section Headings', null, 'sydur-theme-options' );
+    $headings = array(
+        'about_heading'      => 'About Section Heading',
+        'services_heading'   => 'Services Section Heading',
+        'experience_heading'=> 'Experience Section Heading',
+        'skills_heading'     => 'Skills Section Heading',
+        'portfolio_heading'  => 'Portfolio Section Heading',
+        'contact_heading'    => 'Contact Section Heading',
+    );
+    foreach ( $headings as $key => $label ) {
+        add_settings_field( $key, $label, 'sydur_text_field_cb', 'sydur-theme-options', 'sydur_headings_section', array( 'label_for' => $key ) );
+    }
 }
 add_action( 'admin_init', 'sydur_theme_settings_init' );
 
@@ -111,6 +126,19 @@ function sydur_textarea_field_cb( $args ) {
     $options = get_option( 'sydur_options' );
     $val = isset( $options[ $args['label_for'] ] ) ? $options[ $args['label_for'] ] : '';
     echo '<textarea id="' . esc_attr( $args['label_for'] ) . '" name="sydur_options[' . esc_attr( $args['label_for'] ) . ']" rows="5" class="large-text">' . esc_textarea( $val ) . '</textarea>';
+}
+
+/**
+ * Walker that prepends numeric prefixes to menu items.
+ */
+class Sydur_Numbered_Walker_Nav_Menu extends Walker_Nav_Menu {
+    public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+        // Use menu order for numbering (starting at 1) and pad to two digits.
+        $number = str_pad( $item->menu_order, 2, '0', STR_PAD_LEFT );
+        $prefix = '<span class="text-primary">' . $number . '.</span> ';
+        $item->title = $prefix . $item->title;
+        parent::start_el( $output, $item, $depth, $args, $id );
+    }
 }
 
 function sydur_theme_options_page() {
