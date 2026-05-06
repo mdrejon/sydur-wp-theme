@@ -38,6 +38,17 @@
                     echo '<p class="text-slate-500">Please assign a menu in Appearance -> Menus</p>';
                 }
                 ?>
+                <?php 
+                $options = get_option( 'sydur_options' );
+                $btn_label = ! empty( $options['header_button_label'] ) ? $options['header_button_label'] : __( 'Hire Me', 'sydur-wp-theme' );
+                $btn_link  = ! empty( $options['header_button_link'] ) ? $options['header_button_link'] : '#contact';
+                $btn_target = ! empty( $options['header_button_target'] ) ? 'target="_blank"' : '';
+                ?>
+                <a
+                href="<?php echo esc_url( $btn_link ); ?>"
+                class="px-4 py-2 border border-primary text-primary rounded hover:bg-primary/10 transition-colors ml-4"
+                <?php echo $btn_target; ?>
+                ><?php echo esc_html( $btn_label ); ?></a> 
             </div>
 
             <!-- Mobile Menu Button -->

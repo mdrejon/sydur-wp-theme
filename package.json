@@ -1,6 +1,6 @@
 {
   "name": "sydur-wp-theme",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "build:css": "tailwindcss -i ./assets/css/app.css -o ./assets/css/tailwind.css --minify",
     "watch:css": "tailwindcss -i ./assets/css/app.css -o ./assets/css/tailwind.css --watch",

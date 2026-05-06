@@ -4,7 +4,7 @@ Theme URI: https://sydur.com
 Author: Sydur Rahman
 Author URI: https://sydur.com
 Description: A custom, highly-optimized WordPress theme built with Tailwind CSS.
-Version: 1.0.1
+Version: 1.0.2
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: sydur-wp-theme
@@ -116,4 +116,135 @@ body {
 }
 #mobile-menu ul.mobile-menu li.current-menu-item > a {
     color: #22d3ee;
+}
+
+/* Technical Arsenal Enhancements */
+.skill-chip {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.skill-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+    border-color: rgba(34, 211, 238, 0.5);
+}
+.skill-chip::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    transition: 0.5s;
+}
+.skill-chip:hover::after {
+    left: 100%;
+}
+
+.chart-glow-box {
+    position: relative;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(51, 65, 85, 0.5);
+}
+.chart-glow-box::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(45deg, #22d3ee, #3b82f6, #8b5cf6, transparent, transparent);
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0.15;
+    transition: opacity 0.3s;
+}
+.chart-glow-box:hover::before {
+    opacity: 0.4;
+}
+
+.category-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: rgba(34, 211, 238, 0.1);
+    color: #22d3ee;
+    margin-bottom: 1rem;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+.glow-pulse {
+    animation: pulse-glow 3s infinite ease-in-out;
+}
+
+/* Detail Page Typography & Layout */
+.prose-invert {
+    --tw-prose-body: #94a3b8;
+    --tw-prose-headings: #ffffff;
+    --tw-prose-links: #22d3ee;
+    --tw-prose-bold: #f8fafc;
+    --tw-prose-bullets: #334155;
+    --tw-prose-quotes: #e2e8f0;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+
+/* CF7 Custom Styling (Simplified) */
+.cf7-container .wpcf7-form-control:not([type="submit"]) {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: white;
+    margin-bottom: 15px;
+    font-family: inherit;
+}
+
+.cf7-container .wpcf7-submit {
+    width: 100%;
+    background: #22d3ee;
+    color: #0f172a;
+    font-weight: 700;
+    padding: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+}
+
+.cf7-container .wpcf7-submit:hover {
+    background: #0ea5e9;
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+}
+
+/* Bento Grid Enhancements */
+.glass-panel {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-panel:hover {
+    transform: translateY(-5px);
+    background: rgba(30, 41, 59, 0.85);
+}
+
+@keyframes progress-shine {
+    to { left: 100%; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+.animate-float {
+    animation: float 4s infinite ease-in-out;
 }

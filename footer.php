@@ -54,34 +54,44 @@
             const ctx = document.getElementById('stackChart');
             if (ctx && typeof Chart !== 'undefined') {
                 new Chart(ctx, {
-                    type: 'doughnut',
+                    type: 'radar',
                     data: {
-                        labels: ['Backend (PHP/SQL)', 'Frontend (Vue/JS)', 'Architecture/Planning', 'Support/Debug'],
+                        labels: ['Backend', 'Frontend', 'DevOps', 'UI/UX', 'Database', 'WP API'],
                         datasets: [{
-                            data: [45, 30, 15, 10],
-                            backgroundColor: [
-                                '#22d3ee', // Primary
-                                '#3b82f6', // Blue
-                                '#8b5cf6', // Purple
-                                '#475569'  // Slate
-                            ],
-                            borderWidth: 0,
-                            hoverOffset: 4
+                            label: 'Current Proficiency',
+                            data: [95, 85, 70, 75, 90, 98],
+                            backgroundColor: 'rgba(34, 211, 238, 0.2)',
+                            borderColor: '#22d3ee',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#22d3ee',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#22d3ee'
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
+                        scales: {
+                            r: {
+                                angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                pointLabels: {
                                     color: '#94a3b8',
                                     font: { family: "'Fira Code', monospace", size: 10 }
-                                }
+                                },
+                                ticks: { display: false, stepSize: 20 },
+                                suggestedMin: 0,
+                                suggestedMax: 100
                             }
                         },
-                        cutout: '75%'
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        animation: {
+                            duration: 2000,
+                            easing: 'easeOutQuart'
+                        }
                     }
                 });
             }
