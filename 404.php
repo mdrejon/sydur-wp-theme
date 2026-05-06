@@ -1,25 +1,28 @@
 <?php
+
 /**
  * The template for displaying 404 pages (not found)
  */
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
+
 <head>
-    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php wp_head(); ?>
     <style>
         body {
             background-color: #0f172a;
             color: #cbd5e1;
-            overflow: hidden; /* Keep it contained */
+            overflow: hidden;
+            /* Keep it contained */
         }
 
         .bg-grid {
             background-size: 40px 40px;
             background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
             mask-image: linear-gradient(to bottom, transparent, black, transparent);
             -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
         }
@@ -27,7 +30,6 @@
         .glass-panel {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .glitch-effect {
@@ -35,11 +37,22 @@
         }
 
         @keyframes glitch {
-            2%, 64% { transform: translate(2px, 0) skew(0deg); }
-            4%, 60% { transform: translate(-2px, 0) skew(0deg); }
-            62% { transform: translate(0, 0) skew(5deg); }
+
+            2%,
+            64% {
+                transform: translate(2px, 0) skew(0deg);
+            }
+
+            4%,
+            60% {
+                transform: translate(-2px, 0) skew(0deg);
+            }
+
+            62% {
+                transform: translate(0, 0) skew(5deg);
+            }
         }
-        
+
         /* Blinking cursor for terminal */
         .cursor-blink {
             display: inline-block;
@@ -50,9 +63,15 @@
             vertical-align: middle;
             margin-left: 4px;
         }
-        @keyframes blink { 50% { opacity: 0; } }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
     </style>
 </head>
+
 <body class="font-sans antialiased h-screen flex flex-col items-center justify-center relative selection:bg-primary selection:text-slate-900">
 
     <!-- Background Elements -->
@@ -61,7 +80,7 @@
 
     <!-- Navigation (Simplified for 404) -->
     <nav class="absolute top-0 w-full py-6 px-6 md:px-12 flex justify-between items-center">
-        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="text-2xl font-bold text-white tracking-tighter flex items-center gap-1 group">
+        <a href="<?php echo esc_url(home_url('/')); ?>" class="text-2xl font-bold text-white tracking-tighter flex items-center gap-1 group">
             <span class="text-primary group-hover:text-white transition-colors">&lt;</span>
             SR<span class="text-primary font-mono text-xl">/</span>
             <span class="text-primary group-hover:text-white transition-colors">&gt;</span>
@@ -70,12 +89,12 @@
 
     <!-- Main 404 Content -->
     <main class="text-center px-6 z-10 w-full max-w-2xl">
-        
+
         <!-- Big Glitch Title -->
         <h1 class="text-8xl md:text-[150px] font-black text-white/5 tracking-widest mb-4 glitch-effect select-none">
             404
         </h1>
-        
+
         <!-- Terminal Error Window -->
         <div class="glass-panel rounded-lg overflow-hidden border border-slate-700 shadow-2xl mb-10 text-left relative z-20 -mt-16 md:-mt-24 mx-auto max-w-lg">
             <div class="bg-slate-800 px-4 py-2 flex items-center gap-2 border-b border-slate-700">
@@ -97,7 +116,7 @@
             <button onclick="window.history.back()" class="px-6 py-3 border border-slate-600 text-slate-300 font-bold rounded flex items-center justify-center gap-2 hover:border-slate-400 hover:text-white transition-all w-full sm:w-auto">
                 <span class="text-lg">&#8592;</span> Go Back
             </button>
-            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="px-6 py-3 bg-primary text-slate-900 font-bold rounded flex items-center justify-center gap-2 hover:bg-primaryHover transition-all w-full sm:w-auto">
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="px-6 py-3 bg-primary text-slate-900 font-bold rounded flex items-center justify-center gap-2 hover:bg-primaryHover transition-all w-full sm:w-auto">
                 Return to Root <span class="text-lg">&#8962;</span>
             </a>
         </div>
@@ -110,4 +129,5 @@
 
     <?php wp_footer(); ?>
 </body>
+
 </html>

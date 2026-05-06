@@ -32,6 +32,53 @@ function sydur_theme_scripts()
     wp_enqueue_style('sydur-tailwind', get_template_directory_uri() . '/assets/css/tailwind.css', array(), SYDUR_THEME_VERSION);
     wp_enqueue_style('sydur-style', get_stylesheet_uri(), array('sydur-tailwind'), SYDUR_THEME_VERSION);
     wp_enqueue_script('chart-js', 'https://cdn.jsdelivr.net/npm/chart.js', array(), null, true);
+
+    // Dynamic CSS for CF7 styling
+    $custom_css = "
+        .wpcf7-form-control:not(.wpcf7-submit) {
+            width: 100%;
+            background: rgba(30, 41, 59, 0.5) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: #fff !important;
+            padding: 12px 16px !important;
+            border-radius: 8px !important;
+            font-family: 'Fira Code', monospace !important;
+            font-size: 14px !important;
+            margin-bottom: 15px !important;
+            transition: all 0.3s ease !important;
+        }
+        .wpcf7-form-control:not(.wpcf7-submit):focus {
+            border-color: #22d3ee !important;
+            outline: none !important;
+            background: rgba(30, 41, 59, 0.8) !important;
+        }
+        .wpcf7-submit {
+            background: #22d3ee !important;
+            color: #0f172a !important;
+            font-weight: bold !important;
+            font-family: 'Fira Code', monospace !important;
+            padding: 12px 32px !important;
+            border-radius: 4px !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+        }
+        .wpcf7-submit:hover {
+            background: #06b6d4 !important;
+            transform: translateY(-2px) !important;
+        }
+        .wpcf7-response-output {
+            border-radius: 8px !important;
+            font-family: 'Fira Code', monospace !important;
+            font-size: 13px !important;
+            margin-top: 20px !important;
+            border-color: rgba(34, 211, 238, 0.3) !important;
+            color: #fff !important;
+        }
+    ";
+    wp_add_inline_style('sydur-style', $custom_css);
 }
 add_action('wp_enqueue_scripts', 'sydur_theme_scripts');
 
@@ -239,10 +286,23 @@ function sydur_theme_settings_init()
     add_settings_field('about_text', 'About Me Text (HTML allowed)', 'sydur_textarea_field_cb', 'sydur-theme-options', 'sydur_about_section', array('label_for' => 'about_text', 'placeholder' => 'Tell your story...'));
     add_settings_field('github_url', 'GitHub URL', 'sydur_text_field_cb', 'sydur-theme-options', 'sydur_about_section', array('label_for' => 'github_url', 'placeholder' => 'https://github.com/yourusername'));
     add_settings_field('linkedin_url', 'LinkedIn URL', 'sydur_text_field_cb', 'sydur-theme-options', 'sydur_about_section', array('label_for' => 'linkedin_url', 'placeholder' => 'https://linkedin.com/in/yourusername'));
+    add_settings_field('wporg_url', 'WordPress.org URL', 'sydur_text_field_cb', 'sydur-theme-options', 'sydur_about_section', array('label_for' => 'wporg_url', 'placeholder' => 'https://profiles.wordpress.org/yourusername'));
+    add_settings_field('facebook_url', 'Facebook URL', 'sydur_text_field_cb', 'sydur-theme-options', 'sydur_about_section', array('label_for' => 'facebook_url', 'placeholder' => 'https://facebook.com/yourusername'));
 
     add_settings_section('sydur_contact_section', 'Contact Settings', null, 'sydur-theme-options');
     add_settings_field('contact_email', 'Contact Email', 'sydur_text_field_cb', 'sydur-theme-options', 'sydur_contact_section', array('label_for' => 'contact_email', 'placeholder' => 'hello@sydur.com'));
-    add_settings_field('service_form_shortcode', 'Service Form Shortcode (CF7)', 'sydur_text_field_cb', 'sydur-theme-options', 'sydur_contact_section', array('label_for' => 'service_form_shortcode', 'placeholder' => '[contact-form-7 id="..." title="..."]'));
+    add_settings_field('contact_button_label', 'Contact Button Label (Fallback)', 'sydur_text_field_cb', 'sydur-theme-options', 'sydur_contact_section', array('label_for' => 'contact_button_label', 'placeholder' => 'Say Hello'));
+    add_settings_field('contact_description', 'Contact Section Description', 'sydur_textarea_field_cb', 'sydur-theme-options', 'sydur_contact_section', array('label_for' => 'contact_description', 'placeholder' => "I'm currently open for new opportunities..."));
+    add_settings_field('main_contact_shortcode', 'Main Contact Form Shortcode (CF7)', 'sydur_text_field_cb', 'sydur-theme-options', 'sydur_contact_section', array(
+        'label_for'   => 'main_contact_shortcode',
+        'placeholder' => '[contact-form-7 id="..." title="..."]',
+        'description' => 'Paste your Contact Form 7 shortcode here. If empty, the built-in form will be shown.'
+    ));
+    add_settings_field('service_form_shortcode', 'Service Detail Form Shortcode (CF7)', 'sydur_text_field_cb', 'sydur-theme-options', 'sydur_contact_section', array(
+        'label_for'   => 'service_form_shortcode',
+        'placeholder' => '[contact-form-7 id="..." title="..."]',
+        'description' => 'This form will appear on individual service pages.'
+    ));
     // Section Headings
     add_settings_section('sydur_headings_section', 'Section Headings', null, 'sydur-theme-options');
     $headings = array(
@@ -296,6 +356,9 @@ function sydur_text_field_cb($args)
     $val = isset($options[$args['label_for']]) ? $options[$args['label_for']] : '';
     $placeholder = isset($args['placeholder']) ? $args['placeholder'] : '';
     echo '<input type="text" id="' . esc_attr($args['label_for']) . '" name="sydur_options[' . esc_attr($args['label_for']) . ']" value="' . esc_attr($val) . '" placeholder="' . esc_attr($placeholder) . '" class="regular-text">';
+    if (isset($args['description'])) {
+        echo '<p class="description">' . esc_html($args['description']) . '</p>';
+    }
 }
 
 function sydur_textarea_field_cb($args)
@@ -373,7 +436,11 @@ function sydur_seed_default_content()
         'about_text'       => "<p>I see myself as a <span class='text-primary'>problem solver first</span>, and a developer second. Coming from a non-IT background with an MBA in Accounting, my journey into development was driven by pure curiosity and an analytical mindset.</p>\n<p>Over the past 7+ years, I've worked deeply with web technologies, specializing in complex backend logic, API integrations, and modern frontends (like Vue.js). I focus on practical solutions and improving systems rather than just writing lines of code.</p>\n<p>I thrive when debugging difficult issues or refactoring legacy architectures to make them reliable and scalable for thousands of active users across diverse server environments.</p>",
         'github_url'       => 'https://github.com',
         'linkedin_url'     => 'https://linkedin.com',
+        'wporg_url'        => 'https://profiles.wordpress.org',
+        'facebook_url'     => 'https://facebook.com',
         'contact_email'    => 'hello@sydur.com',
+        'contact_description' => "I'm currently open for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!",
+        'main_contact_shortcode' => '',
         'header_button_label' => 'Hire Me',
         'header_button_link'  => '#contact',
         'header_button_target' => 0,
@@ -385,25 +452,31 @@ function sydur_seed_default_content()
     $services = array(
         array(
             'title'   => 'Advanced Plugin Engineering',
-            'content' => 'Developing scalable, secure, and highly optimized WordPress plugins from scratch. I build tools intended for mass distribution or highly specific enterprise use-cases.',
+            'content' => 'Developing scalable, secure, and highly optimized WordPress plugins from scratch. I build tools intended for mass distribution or highly specific business logic.',
+            'icon'    => '&#9881;'
         ),
         array(
             'title'   => 'Reactive Frontend UI',
-            'content' => 'Bridging the gap between robust backends and smooth user experiences. I integrate modern JavaScript frameworks like Vue.js and Vanilla JS to create seamless, app-like interfaces.',
+            'content' => 'Bridging the gap between robust backends and smooth user experiences. I integrate modern JavaScript frameworks like Vue.js and Vanilla JS for high-performance interfaces.',
+            'icon'    => '&#128187;'
         ),
         array(
             'title'   => 'Legacy Code Refactoring',
-            'content' => 'Auditing, debugging, and modernizing old codebases. I resolve complex conflicts, improve database query efficiency, and ensure systems are maintainable for the future.',
+            'content' => 'Auditing, debugging, and modernizing old codebases. I resolve complex conflicts, improve database query efficiency, and ensure systems are maintainable for years to come.',
+            'icon'    => '&#128640;'
         ),
     );
 
     foreach ($services as $service) {
-        wp_insert_post(array(
+        $post_id = wp_insert_post(array(
             'post_type'    => 'service',
             'post_title'   => $service['title'],
             'post_excerpt' => $service['content'],
             'post_status'  => 'publish',
         ));
+        if (! is_wp_error($post_id) && isset($service['icon'])) {
+            update_post_meta($post_id, 'service_icon', $service['icon']);
+        }
     }
 
     // 3. Seed Experience
